@@ -2,11 +2,15 @@ const ApiKey = "Ew0xBeU5p8qVg3Shdoo9e3EpdAnnPzoOxpKflyeTzU89BjHPsQmuX4iP"
 const ApiLink = "https://api.pexels.com/v1/search?query=hamsters"
 const ApiLink2 = "https://api.pexels.com/v1/search?query=tigers"
 
+const ApiLink0 = "https://api.pexels.com/v1/search?query="
+
 const LoadBtn = document.getElementById("load_btn")
 const SecLoadBtn = document.getElementById("sec_load_btn")
 const CardImg = document.querySelectorAll(".card img")
 const EditBtn = document.querySelectorAll(".edit_btn")
 const TextMuted = document.getElementsByTagName("small")
+const form = document.getElementById("form")
+const formInput = document.getElementById("form-input")
 
 const changetext = function (data) {
   for (let i = 0; i < TextMuted.length; i++) {
@@ -103,3 +107,38 @@ SecLoadBtn.addEventListener("click", () => {
   changeBtn()
   getImg2()
 })
+
+const research = function (e) {
+  e.preventDefault()
+  const newURL = ApiLink0 + formInput.value
+  console.log(newURL)
+  //   fetch per newURL
+  fetch(newURL, {
+    headers: {
+      Authorization: ApiKey,
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json()
+        console.log("response ok")
+      } else {
+        throw new Error("response NON ok")
+      }
+    })
+    .then((data) => {
+      console.log("array di img eistenti", data)
+      CardImg.forEach((Image, i) => {
+        Image.setAttribute("src", data.photos[i].src.landscape)
+        Image.classList.add("h-50")
+        // CAMBIO TESTO
+        changetext(data)
+      })
+    })
+    .catch((error) => {
+      console.log("errore nella fetch", error)
+    })
+
+  form.reset()
+}
+form.addEventListener("submit", research)
