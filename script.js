@@ -11,6 +11,7 @@ const EditBtn = document.querySelectorAll(".edit_btn")
 const TextMuted = document.getElementsByTagName("small")
 const form = document.getElementById("form")
 const formInput = document.getElementById("form-input")
+const CardTitle = document.querySelectorAll("card-title")
 
 const changetext = function (data) {
   for (let i = 0; i < TextMuted.length; i++) {
@@ -142,3 +143,19 @@ const research = function (e) {
   form.reset()
 }
 form.addEventListener("submit", research)
+
+for (let i = 0; i < CardImg.length; i++) {
+  CardImg[i].addEventListener("click", () => {
+    newPage()
+  })
+}
+
+for (let i = 0; i < CardTitle.length; i++) {
+  CardTitle[i].addEventListener("click", () => {
+    newPage()
+  })
+}
+
+const newPage = function () {
+  window.location.href = "./details.html"
+}
